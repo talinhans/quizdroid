@@ -1,12 +1,6 @@
 package edu.uw.ischool.talin16.quizdroid
 
 object Constants {
-    enum class Type {
-        Math,
-        Physics,
-        MarvelSuperHeroes,
-        Music
-    }
 
     //bundleKeys
     val typeKey = "Type Selected"
@@ -68,24 +62,19 @@ object Constants {
 
     var numOfCorrectlyAnsweredQues = 0;
     var totalNumberOfQuestions =
-        0;// pass here the length of the question list of which user opted the quiz
+        0
     var currIdx: Int = 0
     var isLastQuestionAnswered: Boolean = false
-    var listOfAnswers =
-        mutableListOf<AnswerModel>() // because in result page i have to show what user answered
-
-
+    
     fun clearData() {
         currQuestionBank = listOf()
         lastUsersAnswer = ""
         lastQuestion = QuestionModel("", "", listOf(""))
-        numOfCorrectlyAnsweredQues = 0;
+        numOfCorrectlyAnsweredQues = 0
         totalNumberOfQuestions =
-            0;// pass here the length of the question list of which user opted the quiz
+            0;
         currIdx = 0
         isLastQuestionAnswered = false
-        listOfAnswers =
-            mutableListOf<AnswerModel>() // because in result page i have to show what user answered
 
     }
 }

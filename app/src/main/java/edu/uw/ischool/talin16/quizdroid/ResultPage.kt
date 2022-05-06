@@ -29,14 +29,13 @@ class ResultPage : AppCompatActivity() {
         btnNextOrFinish.setOnClickListener {
             val intent: Intent
             if (Constants.isLastQuestionAnswered) {
-               // remove all previous data
                 Constants.clearData()
                 intent = Intent(this, MainActivity::class.java)
             } else {
                 intent = Intent(this, QuestionPage::class.java)
             }
             startActivity(intent)
-            finish()// finish this activity
+            finish()
         }
     }
 }

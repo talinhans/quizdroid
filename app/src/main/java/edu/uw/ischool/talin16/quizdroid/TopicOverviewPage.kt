@@ -32,7 +32,7 @@ class TopicOverviewPage : AppCompatActivity() {
         val btnBegin = findViewById<Button>(R.id.btnBegin)
         btnBegin.setOnClickListener {
             startActivity(Intent(this, QuestionPage::class.java))
-            finish()// finish this activity
+            finish()
         }
     }
 }
