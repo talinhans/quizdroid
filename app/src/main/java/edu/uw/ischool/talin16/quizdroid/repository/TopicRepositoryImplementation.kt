@@ -1,12 +1,22 @@
 package edu.uw.ischool.talin16.quizdroid.repository
 
+import android.app.DownloadManager
+import android.net.Uri
+import android.os.Handler
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import edu.uw.ischool.talin16.quizdroid.mappers.TopicMapper
 import edu.uw.ischool.talin16.quizdroid.models.Topic
 import edu.uw.ischool.talin16.quizdroid.models.TopicEntity
-import java.io.*
+import org.json.JSONException
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.MalformedURLException
+import java.net.URL
 
 class TopicRepositoryImplementation : TopicRepository {
     override fun getListOfTopics(): List<Topic> {
@@ -17,41 +27,96 @@ class TopicRepositoryImplementation : TopicRepository {
         myListOfTopics = list
     }
 
-    private var myListOfTopics: List<Topic> = listOf()
-    val FILE_NAME: String = "questions.json"
+    private var URL = "https://tednewardsandbox.site44.com/questions.json"
+    private var hitTimeInterval: Int = 60000 // initially i'll hit it every 2 min
+    fun setHitTimeInterval(time: Int) {
+        hitTimeInterval = time * 1000 * 60
+    }
+    fun getHitTimeInterval(): Int {
+        return hitTimeInterval
+    }
+    fun setUrl(url: String) {
+        URL = url.trim()
+    }
 
-    fun getJson(openFileInput: FileInputStream?): String {
-        var result = ""
-        var fis: FileInputStream? = null
-        try {
-            fis = openFileInput
-            var isr: InputStreamReader = InputStreamReader(fis)
-            var br: BufferedReader = BufferedReader(isr)
-            var sb: StringBuilder = StringBuilder()
-            var text: String
-            var line = br.readLine()
-            while (line != null) {
-                text = line
-                sb.append(text).append("\n");
-                line = br.readLine()
-            }
-            result = sb.toString()
-        } catch (e: FileNotFoundException) {
-            Log.d("ZZZZZ", e.message.toString())
-        } catch (e: IOException) {
-            Log.d("ZZZZZ", e.message.toString())
-        } catch (e: Exception) {
-            Log.d("ZZZZZ", e.message.toString())
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close()
-                } catch (e: IOException) {
-                    Log.d("ZZZZZ", e.message.toString())
+    fun getUrl(): String {
+        return URL
+    }
+
+    private var myListOfTopics: List<Topic> = listOf()
+
+    var data: String = ""
+
+    var livedata: MutableLiveData<String> = MutableLiveData()
+
+    lateinit var handler: Handler
+    var isSuccess: MutableLiveData<Boolean> = MutableLiveData(false)
+    fun doCallToGetJsonDataFromNetwork(myHandler: Handler) {
+        handler = myHandler
+        myThread().start()
+        Log.d("****", "Inside Do Call")
+        //var time = getHitTimeInterval() * 1000 * 60
+        // var time = 8000
+//        handler.postDelayed(object : Runnable {
+//            override fun run() {
+//                Log.d("LLLLL", "Doing network call to ${getUrl()}")
+//                myThread().start()
+//            }
+//        }, time.toLong())
+    }
+
+    fun getLiveData(): MutableLiveData<String> {
+        return livedata
+    }
+
+    inner class myThread : Thread() {
+        override fun run() {
+            try {
+                var url = URL(getUrl())
+                var httpUrlConnection = url.openConnection() as HttpURLConnection
+                var inputStream = httpUrlConnection.inputStream
+                var br = BufferedReader(InputStreamReader(inputStream))
+                var sb: StringBuilder = StringBuilder()
+                var line = br.readLine()
+                var text: String
+                while (line != null) {
+                    text = line
+                    sb.append(text).append("\n");
+                    line = br.readLine()
                 }
+                data = sb.toString()
+                Log.d("PPPPPP", "DATA : $data")
+                if (sb.isNullOrEmpty()) {
+                    Log.d("PPPPPP", "Empty or NULLLLL data")
+                }
+            } catch (e: MalformedURLException) {
+                data = ""
+                Log.d("PPPPPP", "caught in exception $e")
+            } catch (e: IOException) {
+                data = ""
+                Log.d("PPPPPP", "caught in exception $e")
+            } catch (e: JSONException) {
+                data = ""
+                Log.d("PPPPPP", "caught in exception $e")
+            } catch (e: Exception) {
+                data = ""
+                Log.d("PPPPPP", "caught in exception $e")
+            } finally {
+                handler.post(Runnable {
+                    Log.d("MMMMMMM", "DATA Inside Handler : $data")
+                    if (data.isNullOrEmpty()) {
+                        isSuccess.value = false
+                        Log.d("MMMMMM", "Data is empty")
+                    } else {
+                        Log.d("MMMMMM", "Data is not empty")
+                        isSuccess.value = true
+                    }
+                    livedata.value = data
+                })
             }
+
+            super.run()
         }
-        return result
     }
 
     override fun convertFromJsonToListOfTopic(data: String): List<Topic> {
@@ -64,6 +129,10 @@ class TopicRepositoryImplementation : TopicRepository {
         //Log.d("XXXXX", "${list[0]}")
         Log.d("WWWWWWWW", "Topic ${listOfTopic[1]}")
         return listOfTopic
+    }
+
+    override fun getDataFromNetwork(url: String) {
+        var request = DownloadManager.Request(Uri.parse(url))
     }
 
     private fun convertFromJsonToListOfTopicEntity(json: String?): List<TopicEntity> {
