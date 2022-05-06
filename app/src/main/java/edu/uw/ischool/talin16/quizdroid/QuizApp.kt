@@ -15,6 +15,5 @@ class QuizApp : Application() { // Singleton Class
     }
     override fun onCreate() {
         super.onCreate()
-        Log.d("Application Class" , "Inside OnCreate Of QuizApp Class")
     }
 }

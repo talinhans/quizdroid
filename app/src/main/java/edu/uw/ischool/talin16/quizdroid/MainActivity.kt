@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
 
     private fun setUpRecyclerView() {
         layoutManager =
-            LinearLayoutManager(baseContext) // this 2 is basically number of columns u want
+            LinearLayoutManager(baseContext)
         var recyclerView = findViewById<RecyclerView>(R.id.recyclerViewTopicList)
         recyclerView.layoutManager = layoutManager
         adapter = TopicListRecyclerView(this)
@@ -32,9 +32,7 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
     }
 
     override fun onTopicClick(position: Int) {
-        Log.d("Current", "User clicked on topic $position")
         var intent: Intent
-
         if (position == 0) {
             intent = Intent(this, TopicOverviewPage::class.java)
             intent.putExtra(Constants.typeKey, Constants.mathVal)
@@ -54,31 +52,3 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
         }
     }
 }
-
-
-
-//
-//        val q1 = findViewById<TextView>(R.id.tvQ1)
-//        q1.setOnClickListener {
-//            var intent = Intent(this, TopicOverviewPage::class.java)
-//            intent.putExtra(Constants.typeKey, Constants.mathVal)
-//            startActivity(intent)
-//        }
-//        val q2 = findViewById<TextView>(R.id.tvQ2)
-//        q2.setOnClickListener {
-//            var intent = Intent(this, TopicOverviewPage::class.java)
-//            intent.putExtra(Constants.typeKey, Constants.physicsVal)
-//            startActivity(intent)
-//        }
-//        val q3 = findViewById<TextView>(R.id.tvQ3)
-//        q3.setOnClickListener {
-//            var intent = Intent(this, TopicOverviewPage::class.java)
-//            intent.putExtra(Constants.typeKey, Constants.marvelSHVal)
-//            startActivity(intent)
-//        }
-//        val q4 = findViewById<TextView>(R.id.tvQ4)
-//        q4.setOnClickListener {
-//            var intent = Intent(this, TopicOverviewPage::class.java)
-//            intent.putExtra(Constants.typeKey, Constants.musicVal)
-//            startActivity(intent)
-//        }

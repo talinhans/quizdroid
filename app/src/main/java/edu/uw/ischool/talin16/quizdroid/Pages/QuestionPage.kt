@@ -25,7 +25,6 @@ class QuestionPage : AppCompatActivity() {
     lateinit var radioBtn4: RadioButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // code this in On Resume , it Will be better I guess
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question_page)
 
@@ -51,11 +50,6 @@ class QuestionPage : AppCompatActivity() {
 
             Constants.currIdx += 1;
 
-            Log.d(
-                "Current",
-                "Current Question $currentQuestion.correctAns and Selected Ans ${selectedOption.trim()}"
-            )
-
             //setupQNA for NextQuestion
             startActivity(Intent(this, ResultPage::class.java))
         }
@@ -76,25 +70,8 @@ class QuestionPage : AppCompatActivity() {
         }
 
         if (correctAns == selectedOption.trim()) {
-            Log.d("Current", "Inside if , user selected correct option")
             Constants.numOfCorrectlyAnsweredQues += 1
 
-//                Constants.listOfAnswers.add(
-//                    AnswerModel(
-//                        currentQuestion,
-//                        selectedOption,
-//                        true
-//                    )
-//                )
-        } else {
-            Log.d("Current", "Else, user selected wrong option")
-//                Constants.listOfAnswers.add(
-//                    AnswerModel(
-//                        currentQuestion,
-//                        selectedOption,
-//                        false
-//                    )
-//                )
         }
     }
 
@@ -107,25 +84,16 @@ class QuestionPage : AppCompatActivity() {
                 }
                 btnSubmit.isEnabled = true
                 selectedOption = selectedRB.text.toString()
-                Log.d("Current", "User Selected ${selectedRB.text}")
             }
         }
     }
 
     private fun setupQnA(Question: Quiz) {// setup radio button
         currentQuestion = Question
-        //  val shuffledListOfOptions = Question.Options.shuffled()
-
         tvQuestion.text = "Q: ${Question.question}"
-
-        var j: Int = 0
         radioBtn1.text = Question.op1
         radioBtn2.text = Question.op2
         radioBtn3.text = Question.op3
         radioBtn4.text = Question.op4
-
-//        for (i in 0 until radioGroup.childCount) {
-//            (radioGroup.getChildAt(i) as RadioButton).text = Question.op1
-//        }
     }
 }
