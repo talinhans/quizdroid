@@ -25,7 +25,6 @@ class QuestionPage : AppCompatActivity() {
     lateinit var radioBtn4: RadioButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // code this in On Resume , it Will be better I guess
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question_page)
 
@@ -64,7 +63,7 @@ class QuestionPage : AppCompatActivity() {
     }
 
     private fun checkAns() {
-        var correctAns: String = ""
+        var correctAns = ""
         if (currentQuestion.correctOption == 1) {
             correctAns = radioBtn1.text.toString()
         } else if (currentQuestion.correctOption == 2) {
@@ -114,8 +113,6 @@ class QuestionPage : AppCompatActivity() {
 
     private fun setupQnA(Question: Quiz) {// setup radio button
         currentQuestion = Question
-        //  val shuffledListOfOptions = Question.Options.shuffled()
-
         tvQuestion.text = "Q: ${Question.question}"
 
         var j: Int = 0
@@ -123,9 +120,11 @@ class QuestionPage : AppCompatActivity() {
         radioBtn2.text = Question.op2
         radioBtn3.text = Question.op3
         radioBtn4.text = Question.op4
+    }
+}
+
+
 
 //        for (i in 0 until radioGroup.childCount) {
 //            (radioGroup.getChildAt(i) as RadioButton).text = Question.op1
 //        }
-    }
-}

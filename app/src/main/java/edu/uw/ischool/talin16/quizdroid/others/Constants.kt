@@ -7,11 +7,11 @@ import edu.uw.ischool.talin16.quizdroid.models.Quiz
 object Constants {
 
     //bundleKeys
-    val typeKey = "Type Selected"
-    val mathVal = "Maths"
-    val physicsVal = "Physics"
-    val marvelSHVal = "Marvel"
-    val musicVal = "Music"
+    const val typeKey = "Type Selected"
+    const val mathVal = "Maths"
+    const val physicsVal = "Physics"
+    const val marvelSHVal = "Marvel"
+    const val musicVal = "Music"
 
     var currQuestionBank = listOf<Quiz>()
 

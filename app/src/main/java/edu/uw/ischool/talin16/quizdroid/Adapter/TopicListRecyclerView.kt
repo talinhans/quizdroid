@@ -7,10 +7,17 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import edu.uw.ischool.talin16.quizdroid.QuizApp
 import edu.uw.ischool.talin16.quizdroid.R
+import edu.uw.ischool.talin16.quizdroid.models.Topic
 
-class TopicListRecyclerView(var onTopicClickListener: OnTopicClickListener) : RecyclerView.Adapter<TopicListRecyclerView.ViewHolder>() {
+class TopicListRecyclerView(var onTopicClickListener: OnTopicClickListener) :
+    RecyclerView.Adapter<TopicListRecyclerView.ViewHolder>() {
 
-    private val listOfTopics = QuizApp.getTopicRepositoryInstance().getListOfTopics()
+    private var listOfTopics = QuizApp.getTopicRepositoryInstance().getListOfTopics()
+
+    fun setAdapterData(list: List<Topic>) {
+        listOfTopics = list
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var tvTitle: TextView = itemView.findViewById(R.id.tvRVTitle)
@@ -23,7 +30,8 @@ class TopicListRecyclerView(var onTopicClickListener: OnTopicClickListener) : Re
             }
         }
     }
-    interface OnTopicClickListener{
+
+    interface OnTopicClickListener {
         fun onTopicClick(position: Int)
     }
 

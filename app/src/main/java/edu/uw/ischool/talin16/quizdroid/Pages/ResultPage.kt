@@ -9,6 +9,7 @@ import edu.uw.ischool.talin16.quizdroid.R
 import edu.uw.ischool.talin16.quizdroid.others.Constants
 
 class ResultPage : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_result_page)
@@ -16,7 +17,6 @@ class ResultPage : AppCompatActivity() {
         var tvScore = findViewById<TextView>(R.id.tvScore)
         tvScore.text =
             "You have ${Constants.numOfCorrectlyAnsweredQues} out of ${Constants.totalNumberOfQuestions} Correct!"
-
 
         var correctAns: String = ""
         if (Constants.lastQuestion.correctOption == 1) {

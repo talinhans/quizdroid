@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuizDroid">
         <activity
+            android:name=".Pages.PreferenceActivity"
+            android:exported="false" />
+        <activity
             android:name=".Pages.TopicOverviewPage"
             android:exported="false" />
         <activity
