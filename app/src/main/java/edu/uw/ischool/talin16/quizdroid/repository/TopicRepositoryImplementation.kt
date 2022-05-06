@@ -37,17 +37,17 @@ class TopicRepositoryImplementation : TopicRepository {
             }
             result = sb.toString()
         } catch (e: FileNotFoundException) {
-            Log.d("ZZZZZ", e.message.toString())
+            Log.d("Error Caught", e.message.toString())
         } catch (e: IOException) {
-            Log.d("ZZZZZ", e.message.toString())
+            Log.d("Error Caught", e.message.toString())
         } catch (e: Exception) {
-            Log.d("ZZZZZ", e.message.toString())
+            Log.d("Error Caught", e.message.toString())
         } finally {
             if (fis != null) {
                 try {
                     fis.close()
                 } catch (e: IOException) {
-                    Log.d("ZZZZZ", e.message.toString())
+                    Log.d("Error Caught", e.message.toString())
                 }
             }
         }
@@ -61,8 +61,6 @@ class TopicRepositoryImplementation : TopicRepository {
         for (i in list.indices) {
             listOfTopic.add(topicMapper.mapFromEntity(list[i]))
         }
-        //Log.d("XXXXX", "${list[0]}")
-        Log.d("WWWWWWWW", "Topic ${listOfTopic[1]}")
         return listOfTopic
     }
 

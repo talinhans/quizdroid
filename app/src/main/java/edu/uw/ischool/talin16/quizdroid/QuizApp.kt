@@ -5,7 +5,7 @@ import android.util.Log
 import edu.uw.ischool.talin16.quizdroid.repository.TopicRepositoryImplementation
 
 
-class QuizApp : Application() { // Singleton Class
+class QuizApp : Application() {
     init {
         instance = this
     }
@@ -21,9 +21,7 @@ class QuizApp : Application() { // Singleton Class
         }
     }
 
-    val FILE_NAME: String = "questions.json"
     override fun onCreate() {
-        Log.d("ZZZZ", "Inside OnCreate Of QuizApp Class")
         super.onCreate()
     }
 }

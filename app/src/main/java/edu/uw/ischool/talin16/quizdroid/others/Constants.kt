@@ -1,7 +1,5 @@
 package edu.uw.ischool.talin16.quizdroid.others
 
-import edu.uw.ischool.talin16.quizdroid.models.AnswerModel
-import edu.uw.ischool.talin16.quizdroid.models.QuestionModel
 import edu.uw.ischool.talin16.quizdroid.models.Quiz
 
 object Constants {
@@ -19,12 +17,9 @@ object Constants {
     lateinit var lastQuestion: Quiz
 
     var numOfCorrectlyAnsweredQues = 0;
-    var totalNumberOfQuestions =
-        0;// pass here the length of the question list of which user opted the quiz
+    var totalNumberOfQuestions = 0
     var currIdx: Int = 0
     var isLastQuestionAnswered: Boolean = false
-    var listOfAnswers =
-        mutableListOf<AnswerModel>() // because in result page i have to show what user answered
 
 
     fun clearData() {
@@ -32,12 +27,9 @@ object Constants {
         lastUsersAnswer = ""
         lastQuestion = Quiz("", "", "", "", "", 0)
         numOfCorrectlyAnsweredQues = 0;
-        totalNumberOfQuestions =
-            0;// pass here the length of the question list of which user opted the quiz
+        totalNumberOfQuestions = 0
         currIdx = 0
         isLastQuestionAnswered = false
-        listOfAnswers =
-            mutableListOf<AnswerModel>() // because in result page i have to show what user answered
 
     }
 

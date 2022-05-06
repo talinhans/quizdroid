@@ -50,11 +50,6 @@ class QuestionPage : AppCompatActivity() {
 
             Constants.currIdx += 1;
 
-            Log.d(
-                "Current",
-                "Current Question $currentQuestion.correctAns and Selected Ans ${selectedOption.trim()}"
-            )
-
             //setupQNA for NextQuestion
             startActivity(Intent(this, ResultPage::class.java))
         }
@@ -75,25 +70,8 @@ class QuestionPage : AppCompatActivity() {
         }
 
         if (correctAns == selectedOption.trim()) {
-            Log.d("Current", "Inside if , user selected correct option")
             Constants.numOfCorrectlyAnsweredQues += 1
 
-//                Constants.listOfAnswers.add(
-//                    AnswerModel(
-//                        currentQuestion,
-//                        selectedOption,
-//                        true
-//                    )
-//                )
-        } else {
-            Log.d("Current", "Else, user selected wrong option")
-//                Constants.listOfAnswers.add(
-//                    AnswerModel(
-//                        currentQuestion,
-//                        selectedOption,
-//                        false
-//                    )
-//                )
         }
     }
 
@@ -106,7 +84,6 @@ class QuestionPage : AppCompatActivity() {
                 }
                 btnSubmit.isEnabled = true
                 selectedOption = selectedRB.text.toString()
-                Log.d("Current", "User Selected ${selectedRB.text}")
             }
         }
     }
@@ -114,8 +91,6 @@ class QuestionPage : AppCompatActivity() {
     private fun setupQnA(Question: Quiz) {// setup radio button
         currentQuestion = Question
         tvQuestion.text = "Q: ${Question.question}"
-
-        var j: Int = 0
         radioBtn1.text = Question.op1
         radioBtn2.text = Question.op2
         radioBtn3.text = Question.op3

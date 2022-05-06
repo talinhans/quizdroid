@@ -16,11 +16,7 @@ class TopicOverviewPage : AppCompatActivity() {
         val repository = QuizApp.getTopicRepositoryInstance()
         val listOfAllTopics = repository.getListOfTopics()
         val type = intent.getStringExtra(Constants.typeKey)
-        if (listOfAllTopics.isEmpty()) {
-            Log.d("Debug", "Error Loading Data")
-            Log.d("WWWWWW", "size of list is 0")
-        } else {
-            Log.d("WWWWWW", "size of list is not 0")
+        if (listOfAllTopics.isNotEmpty()) {
             if (type == Constants.mathVal) {
                 val topic = listOfAllTopics[0]
                 tvNumberOfQuestions.text = topic.questionBank.size.toString()
@@ -57,7 +53,6 @@ class TopicOverviewPage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_topic_overview_page)
-        //val type = intent.getStringExtra(Constants.typeKey)
         tvDescription = findViewById<TextView>(R.id.tvDescription)
         tvNumberOfQuestions = findViewById<TextView>(R.id.tvNumberOfQuestions)
 
