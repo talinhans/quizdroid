@@ -21,11 +21,9 @@ class PreferenceActivity : AppCompatActivity() {
         val myService = Intent(applicationContext, MyService::class.java)
         stopService(myService)
         btnSet.setOnClickListener {
-            Log.d("TTTTT", "${etURL.text} , ${etTime.text}")
             QuizApp.getTopicRepositoryInstance().setUrl(etURL.text.toString())
             QuizApp.getTopicRepositoryInstance()
                 .setHitTimeInterval(etTime.text.toString().trim().toInt())
-
             startService(myService)
             finish()
         }

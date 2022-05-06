@@ -28,7 +28,7 @@ class TopicRepositoryImplementation : TopicRepository {
     }
 
     private var URL = "https://tednewardsandbox.site44.com/questions.json"
-    private var hitTimeInterval: Int = 60000 // initially i'll hit it every 2 min
+    private var hitTimeInterval: Int = 60000 // initially i'll hit it every 1 min
     fun setHitTimeInterval(time: Int) {
         hitTimeInterval = time * 1000 * 60
     }
@@ -54,15 +54,6 @@ class TopicRepositoryImplementation : TopicRepository {
     fun doCallToGetJsonDataFromNetwork(myHandler: Handler) {
         handler = myHandler
         myThread().start()
-        Log.d("****", "Inside Do Call")
-        //var time = getHitTimeInterval() * 1000 * 60
-        // var time = 8000
-//        handler.postDelayed(object : Runnable {
-//            override fun run() {
-//                Log.d("LLLLL", "Doing network call to ${getUrl()}")
-//                myThread().start()
-//            }
-//        }, time.toLong())
     }
 
     fun getLiveData(): MutableLiveData<String> {
@@ -85,30 +76,23 @@ class TopicRepositoryImplementation : TopicRepository {
                     line = br.readLine()
                 }
                 data = sb.toString()
-                Log.d("PPPPPP", "DATA : $data")
-                if (sb.isNullOrEmpty()) {
-                    Log.d("PPPPPP", "Empty or NULLLLL data")
-                }
             } catch (e: MalformedURLException) {
                 data = ""
-                Log.d("PPPPPP", "caught in exception $e")
+                Log.d("Exception Caught", "caught in exception $e")
             } catch (e: IOException) {
                 data = ""
-                Log.d("PPPPPP", "caught in exception $e")
+                Log.d("Exception Caught", "caught in exception $e")
             } catch (e: JSONException) {
                 data = ""
-                Log.d("PPPPPP", "caught in exception $e")
+                Log.d("Exception Caught", "caught in exception $e")
             } catch (e: Exception) {
                 data = ""
-                Log.d("PPPPPP", "caught in exception $e")
+                Log.d("Exception Caught", "caught in exception $e")
             } finally {
                 handler.post(Runnable {
-                    Log.d("MMMMMMM", "DATA Inside Handler : $data")
                     if (data.isNullOrEmpty()) {
                         isSuccess.value = false
-                        Log.d("MMMMMM", "Data is empty")
                     } else {
-                        Log.d("MMMMMM", "Data is not empty")
                         isSuccess.value = true
                     }
                     livedata.value = data
@@ -126,8 +110,6 @@ class TopicRepositoryImplementation : TopicRepository {
         for (i in list.indices) {
             listOfTopic.add(topicMapper.mapFromEntity(list[i]))
         }
-        //Log.d("XXXXX", "${list[0]}")
-        Log.d("WWWWWWWW", "Topic ${listOfTopic[1]}")
         return listOfTopic
     }
 

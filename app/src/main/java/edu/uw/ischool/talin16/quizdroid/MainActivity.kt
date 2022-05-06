@@ -26,9 +26,6 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: TopicListRecyclerView? = null
 
-
-
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.my_menu, menu)
         return true
@@ -37,7 +34,6 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.preferences -> {
-                Log.d("Current", "User pressed Pref")
                 startActivity(Intent(this, PreferenceActivity::class.java))
             }
         }
@@ -60,7 +56,6 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
         progressBar.visibility = View.VISIBLE
         adapter?.setAdapterData(QuizApp.getTopicRepositoryInstance().getListOfTopics())
         repository = QuizApp.getTopicRepositoryInstance()
-       // repository.doCallToGetJsonDataFromNetwork(Handler())
     }
 
     private fun checkAirPlaneMode(): Boolean {
@@ -72,7 +67,6 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
             ) != 0
         ) {
             isOn = true;
-            Log.d("GGGGG", "Airplane Mode is On")
             MaterialAlertDialogBuilder(this)
                 .setTitle("Airplane Mode is ON")
                 .setMessage("Do u want to switch is off?")
@@ -84,8 +78,6 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
                         0
                     );
                 }.show()
-        } else {
-            Log.d("GGGGG", "Airplane Mode is Off")
         }
         return isOn
     }
@@ -100,9 +92,8 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
                 (networkInfo != null && networkInfo.isConnected)
 
         } catch (e: Exception) {
-            Log.d("YYYYYY", "CHecking Connection is connected = ${isConnected}")
+            Log.d("Exception Caught", "${e.message}")
         }
-        Log.d("YYYYYY", "CHecking Connection is connected = ${isConnected}")
         return isConnected
     }
 
@@ -122,7 +113,6 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
             progressBar.visibility = View.GONE
             repository.isSuccess.observe(this, Observer { response ->
                 if (response) {
-                    Log.d("OOOOO", "Inside MainActivity $data")
                     if (!data.isEmpty()) {
                         val listOfTopic = repository.convertFromJsonToListOfTopic(data)
                         adapter?.setAdapterData(listOfTopic)
@@ -149,7 +139,7 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
 
     private fun setUpRecyclerView() {
         layoutManager =
-            LinearLayoutManager(baseContext) // this 2 is basically number of columns u want
+            LinearLayoutManager(baseContext)
         var recyclerView = findViewById<RecyclerView>(R.id.recyclerViewTopicList)
         recyclerView.layoutManager = layoutManager
         adapter = TopicListRecyclerView(this)
@@ -157,9 +147,7 @@ class MainActivity : AppCompatActivity(), TopicListRecyclerView.OnTopicClickList
     }
 
     override fun onTopicClick(position: Int) {
-        Log.d("Current", "User clicked on topic $position")
         var intent: Intent
-
         if (position == 0) {
             intent = Intent(this, TopicOverviewPage::class.java)
             intent.putExtra(Constants.typeKey, Constants.mathVal)

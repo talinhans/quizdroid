@@ -14,9 +14,7 @@ class MyService() : Service() {
     override fun onBind(intent: Intent?): IBinder? {
         return null
     }
-
     var t: Timer = Timer()
-
     override fun onCreate() {
         super.onCreate()
         startService(Intent(this, MyService::class.java))
@@ -29,13 +27,10 @@ class MyService() : Service() {
         val doAsynchronousTask: TimerTask = object : TimerTask() {
             override fun run() {
                 handler.post(Runnable {
-                    Log.i("KKKKKK", "Doing Api Call")
-                    //Do network call here
                     repository.doCallToGetJsonDataFromNetwork(mHandler)
                 })
             }
         }
-        Log.i("BBBBB", "value of hit time ${getHitTime()}")
         t.schedule(doAsynchronousTask, 0, getHitTime())
     }
 
@@ -50,7 +45,6 @@ class MyService() : Service() {
     }
 
     override fun onDestroy() {
-        Log.d("UUUUU", "Inside stop service")
         t.cancel()
         super.onDestroy()
     }
