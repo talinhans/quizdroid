@@ -1,4 +1,4 @@
-package edu.uw.ischool.talin16.quizdroid
+package edu.uw.ischool.talin16.quizdroid.models
 
 data class AnswerModel(
     var question: QuestionModel,
